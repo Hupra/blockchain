@@ -1,9 +1,9 @@
 const SHA256 = require("crypto-js/sha256");
 
 class Block {
-	constructor(data, prevHash) {
+	constructor(data) {
 		this.data = data;
-		this.prevHash = prevHash;
+		this.prevHash = "";
 		this.hash = "";
 		this.nonce = 1; // used in assignment 1
 		this.timeStamp = Date.now();
@@ -38,7 +38,7 @@ class BlockChain {
 	}
 
 	createGenesisBlock() {
-		let block = new Block("Genesis Block", "Nothing");
+		let block = new Block("Genesis Block");
 		block.hash = block.calculateHash();
 		return block;
 	}
