@@ -55,15 +55,7 @@ class BlockChain {
   // This neans that all the blocks in the chain must have a valid hash
   // And a prevHash that matches the previous blocks hash
   isChainValid() {
-    for (let i = 1; i < this.chain.length; i++) {
-      const newblock = this.chain[i];
-      const oldblock = this.chain[i - 1];
-
-      if (newblock.hash !== newblock.calculateHash()) return false;
-
-      if (newblock.prevHash !== oldblock.hash) return false;
-    }
-    return true;
+    return false;
   }
 }
 
