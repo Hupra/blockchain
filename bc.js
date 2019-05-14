@@ -52,30 +52,22 @@ class BlockChain {
 	// This neans that all the blocks in the chain must have a valid hash
 	// And a prevHash that matches the previous blocks hash
 	isChainValid() {
-		for (let i = 1; i < this.chain.length; i++) {
-			const newblock = this.chain[i];
-			const oldblock = this.chain[i - 1];
-
-			if (newblock.hash !== newblock.calculateHash()) return false;
-
-			if (newblock.prevHash !== oldblock.hash) return false;
-		}
-		return true;
+		return false;
 	}
 }
 
 console.time("\nBlockchain creation time");
-bc = new BlockChain();
-bc.addBlock((block = new Block("daniel")));
-bc.addBlock((block = new Block("benjamin")));
-bc.addBlock((block = new Block("lars")));
-bc.addBlock((block = new Block("gitte")));
+const myBlockChain = new BlockChain();
+myBlockChain.addBlock(new Block("daniel"));
+myBlockChain.addBlock(new Block("benjamin"));
+myBlockChain.addBlock(new Block("lars"));
+myBlockChain.addBlock(new Block("gitte"));
 console.timeEnd("\nBlockchain creation time");
 
 console.log("----");
 
-console.log("EXPECTED: true || RESULT: ", bc.isChainValid());
+console.log("EXPECTED: true || RESULT: ", myBlockChain.isChainValid());
 
-bc.chain[2].data = "jabob";
+myBlockChain.chain[2].data = "jabob";
 
-console.log("EXPECTED: false || RESULT: ", bc.isChainValid());
+console.log("EXPECTED: false || RESULT: ", myBlockChain.isChainValid());
