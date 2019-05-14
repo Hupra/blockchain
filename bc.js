@@ -32,8 +32,8 @@ class BlockChain {
 	}
 	addBlock(block) {
 		block.prevHash = this.getLatestBlock().hash;
-		block.hash = block.calculateHash(); // this line to be removed for version 2
-		//block.mineblock(this.difficulty); // this line to be added for version 2
+		block.hash = block.calculateHash(); // this line to be removed for assignment 2
+		//block.mineblock(this.difficulty); // this line to be added for assignment 2
 		this.chain.push(block);
 	}
 
