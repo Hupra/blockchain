@@ -52,7 +52,7 @@ class BlockChain {
 
   // ______________ ASSIGNMENT 2 ______________
   // This method should return true or false depending on the validity of the chain.
-  // This neans that all the blocks in the chain must have a valid hash
+  // This means that all the blocks in the chain must have a valid hash
   // And a prevHash that matches the previous blocks hash
   isChainValid() {
     return false;
