@@ -1,4 +1,5 @@
 const SHA256 = require("crypto-js/sha256");
+const CryptoJS = require("crypto-js");
 
 class Block {
 	constructor(data) {
@@ -25,7 +26,14 @@ class Block {
 	//
 	// This method should be called from the blockchain object,
 	// when you are trying to add it to the chain using the addBlock() method
-	mineblock(n) {}
+	mineblock(n) {
+		console.time("Block");
+		while (this.calculateHash().slice(0, n) !== Array(n + 1).join("0")) {
+			this.nonce++;
+		}
+		this.hash = this.calculateHash();
+		console.timeEnd("Block");
+	}
 }
 
 class BlockChain {
@@ -55,7 +63,15 @@ class BlockChain {
 	// This means that all the blocks in the chain must have a valid hash
 	// And a prevHash that matches the previous blocks hash
 	isChainValid() {
-		return false;
+		for (let i = 1; i < this.chain.length; i++) {
+			const newblock = this.chain[i];
+			const oldblock = this.chain[i - 1];
+
+			if (newblock.hash !== newblock.calculateHash()) return false;
+
+			if (newblock.prevHash !== oldblock.hash) return false;
+		}
+		return true;
 	}
 }
 
@@ -67,28 +83,19 @@ myBlockChain.addBlock(new Block("lars"));
 myBlockChain.addBlock(new Block("gitte"));
 console.timeEnd("\nBlockchain creation time");
 
-// console.log("----");
+console.log("----");
 
-// console.log("EXPECTED: true || RESULT: ", myBlockChain.isChainValid());
+console.log("EXPECTED: true || RESULT: ", myBlockChain.isChainValid());
 
-// myBlockChain.chain[2].data = "jabob";
+myBlockChain.chain[2].data = "jabob";
 
-// console.log("EXPECTED: false || RESULT: ", myBlockChain.isChainValid());
+console.log("EXPECTED: false || RESULT: ", myBlockChain.isChainValid());
 
-// console.log("----");
+console.log("-----");
+const sec = "bob";
+const m1 = CryptoJS.AES.encrypt("Jabob er en bob", sec);
+const m2 = CryptoJS.AES.decrypt(m1, sec).toString(CryptoJS.enc.Utf8);
+console.log(m1.toString());
+console.log(m2);
 
-// myBlockChain.chain.forEach(e => console.log(e.hash));
-
-console.log(myBlockChain.chain[2]);
-
-//
-//
-//
-//
-//
-// ______________ ASSIGNMENT 3 ______________
-//
-// Encrypt dataen så kun du kan læse den (Brug evt. AES encryption)
-//
-//
-//
+myBlockChain.chain.forEach(e => console.log(e.hash));
